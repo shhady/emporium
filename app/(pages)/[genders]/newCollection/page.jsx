@@ -3,12 +3,9 @@
 import ProductCard from '@/components/ProductCard';
 import React, { useEffect, useState } from 'react';
 import BreadCrumbs from '../[category]/[productId]/BreadCrumbs';
-import { productsB } from './Products';
 const NewCollection = ({ category, gender, params }) => {
   const [products, setProducts] = useState([]);
-  console.log(productsB);
 
-  console.log(params);
  
   useEffect(() => {
     const fetchProductsByGender = async () => {
@@ -25,7 +22,7 @@ const NewCollection = ({ category, gender, params }) => {
     };
 
     fetchProductsByGender();
-  }, [category, gender]);
+  }, [params.genders]);
 
   return (
     <>

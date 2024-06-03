@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import VariantModal from '@/components/AddProductFunctionality/VariantModal';
 import { Toaster, toast } from 'sonner';
 import AddProductForm from '@/components/product-form/AddProductForm';
-
+import Image from 'next/image';
 export default function AddingProduct() {
   const [product, setProduct] = useState({
     gender: '',
@@ -84,7 +84,7 @@ export default function AddingProduct() {
           {product.variants.map((variant) => (
             <thead key={variant.color}>
               <tr>
-                <th scope="row"><img src={variant.images[0]} alt='image' style={{ width: '100px', height: '100px' }} /></th>
+                <th scope="row"><Image src={variant.images[0]} alt='image' width={100} height={100} style={{ width: '100px', height: '100px' }} /></th>
                 <th scope="row">{variant.color}</th>
                 <th scope="row" onClick={() => deleteVariant(variant.color)}>delete</th>
               </tr>

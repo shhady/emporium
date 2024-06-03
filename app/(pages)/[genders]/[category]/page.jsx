@@ -1,6 +1,5 @@
 'use client'
 import ProductCard from '@/components/ProductCard';
-import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import BreadCrumbs from './[productId]/BreadCrumbs';
 
@@ -22,7 +21,7 @@ const ProductsByCategoryAndGender = ({ category, gender, params }) => {
     };
 
     fetchProductsByCategoryAndGender();
-  }, [category, gender]);
+  }, [params.category, params.gender]);
 
   return (
     <>

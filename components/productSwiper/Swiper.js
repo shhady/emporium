@@ -48,7 +48,7 @@ export function SwiperDesktop({images}) {
         className="mySwiper2 w-9/12"
       >
          {images.map((image)=>{
-            return <SwiperSlide >
+            return <SwiperSlide key={image}>
                 <img src={image} alt='product image' className='mainPhoto'/>
              </SwiperSlide>
         })}
