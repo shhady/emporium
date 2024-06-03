@@ -1,0 +1,35 @@
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide .mainPhoto {
+  display: block;
+  width: 100%;
+  height: 50vh;
+  object-fit:fill;
+}
+
+/* .paginationPhotos{
+    height: 100%;
+    width: 80px;
+    object-fit: cover;
+} */
+.paginationPhotosMobile{
+    object-fit: cover;
+}
+.paginationSwiper{
+    height: 50vh;
+    width: 200px;
+}
