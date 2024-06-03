@@ -21,7 +21,7 @@ const ProductsByCategoryAndGender = ({ category, gender, params }) => {
     };
 
     fetchProductsByCategoryAndGender();
-  }, [params.category, params.gender]);
+  }, [params.category, params.genders]);
 
   return (
     <>

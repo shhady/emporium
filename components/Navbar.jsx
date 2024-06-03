@@ -113,7 +113,8 @@ export default function Example() {
           <div className="flex items-center justify-between">
             <Link href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <img
+              <Image
+              width={1000} height={1000} 
                 className="h-8 w-auto"
                 src="/logo.png"
                 alt=""

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Footer from '@/components/Footer'
 import SecondNav from '@/components/SecondNav';
 import { usePathname } from 'next/navigation'
-export default function layout({children, params}) {
+export default function Layout({children, params}) {
   const pathName = usePathname();
   const {genders} = params;
   console.log(pathName.split('/')[3]);

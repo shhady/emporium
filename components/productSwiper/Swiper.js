@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-
+import Image from 'next/image';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/free-mode';
@@ -49,7 +49,7 @@ export function SwiperDesktop({images}) {
       >
          {images.map((image)=>{
             return <SwiperSlide key={image}>
-                <img src={image} alt='product image' className='mainPhoto'/>
+                <Image width={1000} height={1000} src={image} alt='product image' className='mainPhoto'/>
              </SwiperSlide>
         })}
         
@@ -66,7 +66,7 @@ export function SwiperDesktop({images}) {
       >
         {images.map((image)=>{
             return <SwiperSlide key={image}>
-                <img src={image} alt='product image' style={{height:'90px', width:'100px', objectFit:'cover', border:"1px solid #b9b8b8"}}/>
+                <Image width={1000} height={1000}  src={image} alt='product image' style={{height:'90px', width:'100px', objectFit:'cover', border:"1px solid #b9b8b8"}}/>
              </SwiperSlide>
         })}
       </Swiper>
@@ -91,7 +91,7 @@ export function SwiperMobile({images}) {
       >
          {images.map((image)=>{
             return <SwiperSlide key={image}>
-                <img src={image} alt='product image' className='mainPhoto'/>
+                <Image width={1000} height={1000}  src={image} alt='product image' className='mainPhoto'/>
              </SwiperSlide>
         })}
         
