@@ -32,7 +32,7 @@ export default function ProductInfo({ product, chosenVariant, setChosenVariant, 
     const loadingToast = toast.loading('מוסיף לסל');
 
     if(!selectedSize){
-      setAlertSize(true)
+      setAlertSize(true);
          return toast.error('תבחר מידה', {
           id: loadingToast,
         });
@@ -86,12 +86,17 @@ export default function ProductInfo({ product, chosenVariant, setChosenVariant, 
             </div>
           ))}
         </div>
-        {alertSize ? <div className='min-h-[2rem] text-red-600'>תבחר מידה</div>: <div className='min-h-[2rem]'></div>}
-      </div>
+        {alertSize ? (
+  <div style={{ height: '48px', color: 'red', margin: 0, padding: 0 }}>תבחר מידה</div>
+) : (
+  <div style={{ height: '48px', margin: 0, padding: 0 }}></div>
+)}    </div>
       <div className='w-full flex justify-center items-center mt-2'>
         <Button className='w-full' onClick={handleAddToCart}>הוסף לסל</Button>
       </div>
+      <div className='fixed'>
       <Toaster />
+      </div>
     </div>
   );
 }
