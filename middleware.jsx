@@ -1,7 +1,8 @@
 import { authMiddleware } from "@clerk/nextjs";
 
 export default authMiddleware({
-    publicRoutes: ['/api/products', '/'], // Public route, no sign-in required
+    ignoredRoutes: ["/api/webhooks(.*)"],
+    publicRoutes: ['/api/products', '/','/api/webhooks/clerk' ], // Public route, no sign-in required
     authorize: (req, res) => {
         // Check if the path matches the protected route
         if (req.path === "/protected-route") {
