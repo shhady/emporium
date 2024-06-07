@@ -3,7 +3,9 @@ import { headers } from 'next/headers';
 import { WebhookEvent } from '@clerk/nextjs/server';
 import User from '@/models/user';
 import { connectToDB } from "@/utils/database";
-
+import { createUser } from '../../add-user/route';
+import { clerkClient } from '@clerk/nextjs';
+import { NextResponse } from 'next/server';
 export async function POST(req) {
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
 
@@ -73,16 +75,15 @@ export async function POST(req) {
 
     console.log('Creating user:', user);
 
-    try {
-      await connectToDB();
-      const newUser = new User(user);
-      await newUser.save();
-      console.log('User created successfully:', newUser);
-      return new Response(JSON.stringify(newUser), { status: 201 });
-    } catch (error) {
-      console.error('Error creating user:', error);
-      return new Response('Failed to create user', { status: 400 });
+    const newUser = await createUser(user);
+    if(newUser){
+        await clerkClient.users.updateUserMetadata(id,{
+            publicMetadata:{
+                userId:newUser._id,
+            }
+        })
     }
+    return NextResponse.json({message: 'new user created successfully', user: newUser})
   }
 
   return new Response('', { status: 200 });
