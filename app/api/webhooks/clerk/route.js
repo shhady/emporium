@@ -1,46 +1,48 @@
-import { Webhook } from 'svix'
-import { headers } from 'next/headers'
-import { WebhookEvent } from '@clerk/nextjs/server'
+import { Webhook } from 'svix';
+import { headers } from 'next/headers';
+import { WebhookEvent } from '@clerk/nextjs/server';
 import User from '@/models/user';
-export async function POST(req, res) {
-  // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
+import { connectToDB } from "@/utils/database";
+
+export async function POST(req) {
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
 
   if (!WEBHOOK_SECRET) {
     throw new Error('Please add WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local');
   }
 
-  // Get the headers
   const headerPayload = headers();
   const svix_id = headerPayload.get("svix-id");
   const svix_timestamp = headerPayload.get("svix-timestamp");
   const svix_signature = headerPayload.get("svix-signature");
 
-  // If there are no headers, error out
   if (!svix_id || !svix_timestamp || !svix_signature) {
-    return res.status(400).send('Error occurred -- no svix headers');
+    return new Response('Error occurred -- no svix headers', { status: 400 });
   }
 
-  // Get the body
-  const payload = await new Promise((resolve, reject) => {
-    let body = '';
-    req.on('data', chunk => {
-      body += chunk.toString();
-    });
-    req.on('end', () => {
-      resolve(JSON.parse(body));
-    });
-    req.on('error', reject);
-  });
+  // Read the request body
+  let body = '';
+  try {
+    const reader = req.body.getReader();
+    const decoder = new TextDecoder();
+    let done = false;
 
-  const body = JSON.stringify(payload);
+    while (!done) {
+      const { value, done: doneReading } = await reader.read();
+      done = doneReading;
+      body += decoder.decode(value);
+    }
+  } catch (error) {
+    console.error('Error reading request body:', error);
+    return new Response('Error reading request body', { status: 400 });
+  }
 
-  // Create a new Svix instance with your secret.
+  const payload = JSON.parse(body);
+
   const wh = new Webhook(WEBHOOK_SECRET);
 
   let evt;
 
-  // Verify the payload with the headers
   try {
     evt = wh.verify(body, {
       "svix-id": svix_id,
@@ -49,40 +51,39 @@ export async function POST(req, res) {
     });
   } catch (err) {
     console.error('Error verifying webhook:', err);
-    return res.status(400).send('Error occurred');
+    return new Response('Error occurred', { status: 400 });
   }
 
-  // Do something with the payload
-  // For this guide, you simply log the payload to the console
-  const { id } = evt.data;
-  const eventType = evt.type;
-  console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
+  const { id, type } = evt.data;
+  console.log(`Webhook with an ID of ${id} and type of ${type}`);
   console.log('Webhook body:', body);
-  if (evt.type === 'user.created') {
-    const {id, email_addresses, image_url, first_name, last_name, username} = evt.data;
+
+  if (type === 'user.created') {
+    const { id, email_addresses, image_url, first_name, last_name, username } = evt.data;
+
     const user = {
-        clerkId:id,
-        email:email_addresses[0].email_address,
-        username:username,
-        firstName:first_name,
-        lastName:last_name,
-        photo:image_url,
-        role: 'user'
-    }
+      clerkId: id,
+      email: email_addresses[0].email_address,
+      username,
+      firstName: first_name,
+      lastName: last_name,
+      photo: image_url,
+      role: 'user'
+    };
 
-    console.log(user)
+    console.log('Creating user:', user);
+
     try {
-        await connectToDB();  // Ensure the database is connected
-  
-        const newUser = new User(user);
-        await newUser.save();  // Save the new user to the database
-  
-        console.log('User created successfully:', newUser);
-        return new Response(JSON.stringify(newUser), { status: 201 });  // Respond with the new user data
-      } catch (error) {
-        console.error('Error creating user:', error);  // Log any errors
-        return new Response('Failed to create user', { status: 400 });
-      }  }
+      await connectToDB();
+      const newUser = new User(user);
+      await newUser.save();
+      console.log('User created successfully:', newUser);
+      return new Response(JSON.stringify(newUser), { status: 201 });
+    } catch (error) {
+      console.error('Error creating user:', error);
+      return new Response('Failed to create user', { status: 400 });
+    }
+  }
 
-  return res.status(200).send('');
-};
+  return new Response('', { status: 200 });
+}
