@@ -2,7 +2,7 @@ import mongoose, {models} from "mongoose";
 const Schema = mongoose.Schema;
 
 // Define the main product schema and reference the variant schema
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
     clerkId: {
       type: String,
       required: true,
