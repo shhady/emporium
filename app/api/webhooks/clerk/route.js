@@ -56,7 +56,8 @@ export async function POST(req) {
     return new Response('Error occurred', { status: 400 });
   }
 
-  const { id, type } = evt.data;
+  const { id } = evt.data;
+    const type = evt.type; 
   console.log(`Webhook with an ID of ${id} and type of ${type}`);
   console.log('Webhook body:', body);
 
