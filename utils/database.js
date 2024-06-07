@@ -17,7 +17,6 @@ export const connectToDB = async () => {
         await mongoose.connect(process.env.DATABASE_URL, {
             dbName: 'emporium',        // Name of the database
             useNewUrlParser: true,     // Options to handle deprecations
-            useUnifiedTopology: true
         });
         isConnected = true;
         console.log('MongoDB connection established');
