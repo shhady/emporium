@@ -67,7 +67,7 @@ export async function POST(req) {
     const user = {
       clerkId: id,
       email: email_addresses[0].email_address,
-      username: email_addresses[0].email_address.split("@")[0],
+      username: username ? username : email_addresses[0].email_address.split("@")[0],
       firstName: first_name,
       lastName: last_name,
       photo: image_url,
