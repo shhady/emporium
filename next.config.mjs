@@ -5,10 +5,19 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'images.pexels.com',
-        pathname: '**',
+        pathname: '**', // Allow all paths
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '**', // Allow all paths
+      },
+      {
+        protocol: 'https',
+        hostname: 'example.com',
+        pathname: '/images/**', // Allow only paths starting with /images/
       },
     ],
-    domains: ['res.cloudinary.com']
   },
 };
 
