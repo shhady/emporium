@@ -2,7 +2,6 @@ import Link from 'next/link';
 import React from 'react'
 
 export default function PagesHeros({heroImage}) {
-  console.log(heroImage);
   return (
     <div>
       <Link href={`/${heroImage}/newCollection`}>

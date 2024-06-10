@@ -1,6 +1,8 @@
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from '@clerk/nextjs'
+import {NextUIProvider} from "@nextui-org/react";
+
 // import TopOfWeb from "@/components/TopOfWeb";
 const inter = Roboto({ subsets: ["latin"], weight: '400' });
 
@@ -11,13 +13,21 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+   
     <ClerkProvider>
+       
     <html lang="he" dir="rtl" suppressHydrationWarning>
+    
       <body className={inter.className}>
       {/* <TopOfWeb/> */}
       {/* <Navbar/> */}
-      {children}</body>
+      <NextUIProvider>
+      {children}
+      </NextUIProvider></body>
+     
     </html>
+    
     </ClerkProvider>
+  
   );
 }

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Heart } from 'lucide-react';
 import { ShoppingBag } from 'lucide-react';
+import Modal from './modal/Modal';
 
 export default function ProductCard({ product, gender }) {
   const [isFav, setIsFav] = useState(false);
@@ -14,10 +15,13 @@ export default function ProductCard({ product, gender }) {
     console.log('clicked');
     setIsFav(prev => !prev);
   };
-
+  const handleButtonClick = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+  };
   return (
-    <Link href={gender ? `${product.category}/${product._id}` : `${product.gender}/${product.category}/${product._id}`} passHref className="w-full">
-      <div className="bg-white md:shadow-md md:ounded-lg overflow-hidden relative mt-2 ">
+    <Link legacyBehavior  href={gender ? `${product.category}/${product._id}` : `${product.gender}/${product.category}/${product._id}`} passHref className="w-full">
+      <div className="bg-white md:shadow-md md:ounded-lg overflow-hidden relative mt-2 cursor-pointer" >
         <div className="relative">
           <div
             className={`absolute top-2 right-2 cursor-pointer ${isFav ? 'text-red-500' : 'text-white'}`}
@@ -44,8 +48,9 @@ export default function ProductCard({ product, gender }) {
             <p className="text-gray-700 mt-2 line-clamp-2 min-h-[3rem]">{product.description}</p>
             <div className="flex justify-between items-center mt-4">
               <h2 className=" font-medium text-[18px]">₪{product.price}</h2>
-              <div className="border border-black rounded-full p-[5px] flex items-center">
-                <ShoppingBag size={16} />
+              <div className=" rounded-full p-[5px] flex justify-center items-center" onClick={handleButtonClick}>
+                {/* <ShoppingBag size={16} /> */}
+                <Modal />
               </div>
             </div>
             <div className="flex gap-3 mt-4 overflow-hidden">
@@ -56,6 +61,7 @@ export default function ProductCard({ product, gender }) {
           </div>
         </div>
       </div>
+    
     </Link>
   );
 }

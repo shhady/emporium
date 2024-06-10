@@ -1,39 +1,27 @@
-'use client'
+// app/[genders]/[category]/page.jsx
+
 import ProductCard from '@/components/ProductCard';
-import React, { useEffect, useState } from 'react';
 import BreadCrumbs from './[productId]/BreadCrumbs';
+// import { fetchProductsByCategoryAndGender } from '@/lib/api'; // Assuming you have a utility function for API calls
 
-const ProductsByCategoryAndGender = ({ category, gender, params }) => {
-  const [products, setProducts] = useState([]);
-  console.log(params);
-  useEffect(() => {
-    const fetchProductsByCategoryAndGender = async () => {
-      try {
-        const response = await fetch(`/api/products/categoryGender?category=${params.category}&gender=${params.genders}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch products');
-        }
-        const products = await response.json();
-        setProducts(products);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
-
-    fetchProductsByCategoryAndGender();
-  }, [params.category, params.genders]);
-
+export default async function ProductsByCategoryAndGender({ params }) {
+  const { genders, category } = params;
+  console.log(genders, category);
+  // Fetch products from your backend API
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_PROD_URL ? process.env.NEXT_PUBLIC_BACKEND_PROD_URL : process.env.NEXT_PUBLIC_BACKEND_DEV_URL }/api/products/categoryGender?category=${category}&gender=${genders}`);
+  if (!response.ok) {
+    return <div className='mt-8 flex justify-center items-center'>No products found</div>;;
+  }
+  const data = await response.json();
+  console.log(data);
   return (
-    <>
-    <BreadCrumbs route={params}/>
-    <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 md:gap-2 md:p-6'>
-      {products.map((product) => (
-       <ProductCard product={product} key={product.id} gender={params.genders}/>
-      ))}
-     
+    <div className='mt-4 lg:px-16'>
+      <BreadCrumbs route={{ genders, category }} />
+      <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 md:gap-2 md:p-6'>
+        {data?.map((product) => (
+          <ProductCard key={product._id} product={product} gender={genders} />
+        ))}
+      </div>
     </div>
-    </>
   );
-};
-
-export default ProductsByCategoryAndGender;
+}
