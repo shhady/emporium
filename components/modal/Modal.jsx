@@ -2,8 +2,9 @@
 import React from "react";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
 import { ShoppingBag } from 'lucide-react';
+import ProductInfo from "../productDetails/ProductInfo";
 
-export default function MyModal() {
+export default function MyModal({product}) {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [modalPlacement, setModalPlacement] = React.useState("auto");
 
@@ -22,33 +23,29 @@ export default function MyModal() {
         isOpen={isOpen} 
         placement={modalPlacement}
         onOpenChange={onOpenChange} 
+        size='3xl'
       >
         <ModalContent>
           {(onClose) => (
             <>
-            <div className="flex flex-col md:flex-row">
-              <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+            
+              <ModalHeader className="flex flex-col gap-1"></ModalHeader>
               <ModalBody>
-                <p> 
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
+                <div className="py-4">
+
+                <ProductInfo product={product} onPress={onClose}/>
+                </div>
+                
               </ModalBody>
-              </div>
-              <ModalFooter>
+              
+              {/* <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
                   ביטול
                 </Button>
                 <Button color="primary" onPress={onClose}>
                  הוסף לסל
                 </Button>
-              </ModalFooter>
+              </ModalFooter> */}
             </>
           )}
         </ModalContent>

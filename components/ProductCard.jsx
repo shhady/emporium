@@ -50,7 +50,7 @@ export default function ProductCard({ product, gender }) {
               <h2 className=" font-medium text-[18px]">₪{product.price}</h2>
               <div className=" rounded-full p-[5px] flex justify-center items-center" onClick={handleButtonClick}>
                 {/* <ShoppingBag size={16} /> */}
-                <Modal />
+                <Modal product={product}/>
               </div>
             </div>
             <div className="flex gap-3 mt-4 overflow-hidden">
