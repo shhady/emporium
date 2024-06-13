@@ -92,7 +92,7 @@ export function SwiperMobile({images, productId}) {
          {images.map((image)=>{
             return <SwiperSlide key={image}>
               {productId ? (<Image width={1000} height={1000}  src={image} alt='product image' className='mainPhoto'/>
-):(                <Image width={250} height={250} alt='product image' src={image} objectFit='cover' className='mainPhotoModal'/>
+):(                <Image width={1000} height={1000} alt='product image' src={image} objectFit='cover' className='mainPhotoModal'/>
 )}
              </SwiperSlide>
         })}
