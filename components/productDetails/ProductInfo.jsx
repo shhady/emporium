@@ -18,10 +18,6 @@ export default function ProductInfo({ product , productId,onPress}) {
     setIsFav(prev => !prev);
   };
 
-  console.log(productId);
-  // useEffect(() => {
-  //   setLocalChosenVariant(chosenVariant);
-  // }, [chosenVariant]);
 
   const chooseVariant = (id) => {
     const chosenNewVariant = variants.find(variant => variant._id === id);
@@ -64,7 +60,7 @@ export default function ProductInfo({ product , productId,onPress}) {
   return (
     <div className='grid grid-cols-1 md:grid md:grid-cols-10'>
        <div className='md:hidden'>
-          <SwiperMobile images={chosenVariant.images} />
+          <SwiperMobile images={chosenVariant.images} productId={productId}/>
     </div>
     <div className={`${productId ? 'h-1/2-screen':""} col-span-5 px-4 md:px-24 flex flex-col justify-between`}>
       <div dir='ltr' className='flex justify-between items-center'>

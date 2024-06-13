@@ -74,7 +74,7 @@ export function SwiperDesktop({images}) {
   );
 }
 
-export function SwiperMobile({images}) {
+export function SwiperMobile({images, productId}) {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   return (
@@ -91,7 +91,9 @@ export function SwiperMobile({images}) {
       >
          {images.map((image)=>{
             return <SwiperSlide key={image}>
-                <Image width={1000} height={1000}  src={image} alt='product image' className='mainPhoto'/>
+              {productId ? (<Image width={1000} height={1000}  src={image} alt='product image' className='mainPhoto'/>
+):(                <Image width={250} height={250} src={image} objectFit='cover'/>
+)}
              </SwiperSlide>
         })}
         
