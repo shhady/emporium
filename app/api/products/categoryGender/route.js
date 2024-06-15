@@ -3,11 +3,10 @@ import Product from "@/models/product";
 
 export async function GET(req) {
   if (req.method === 'GET') {
-    // const { category, gender } = req.query;
     const url = new URL(req.url, process.env.NEXT_PUBLIC_BACKEND_PROD_URL ? process.env.NEXT_PUBLIC_BACKEND_PROD_URL : process.env.NEXT_PUBLIC_BACKEND_DEV_URL);
-      const category = url.searchParams.get('category');
-      const gender = url.searchParams.get('gender');
-      console.log(gender, category);
+    const category = url.searchParams.get('category');
+    const gender = url.searchParams.get('gender');
+    
     try {
       await connectToDB();
 
@@ -19,7 +18,7 @@ export async function GET(req) {
         query.gender = gender;
       }
 
-      const products = await Product.find(query).exec();
+      const products = await Product.find(query).sort({ createdAt: -1 }).exec();
       if (products.length > 0) {
         return new Response(JSON.stringify(products), { status: 200 });
       } else {

@@ -14,7 +14,7 @@ export async function GET(req) {
         query.category = category;
       }
 
-      const products = await Product.find(query).exec();
+      const products = await Product.find(query).sort({ createdAt: -1 }).exec();
       if (products.length > 0) {
         return new Response(JSON.stringify(products), { status: 200 });
       } else {

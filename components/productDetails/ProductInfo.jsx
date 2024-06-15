@@ -102,7 +102,7 @@ export default function ProductInfo({ product , productId,onPress}) {
   <div style={{ height: '48px', margin: 0, padding: 0 }}></div>
 )}    </div>
       <div className='w-full flex justify-center items-center mt-2'>
-        <Button className='w-full' onClick={handleAddToCart}>הוסף לסל</Button>
+        <Button disabled={toast.loading} className='w-full' onClick={handleAddToCart}>הוסף לסל</Button>
       </div>
       <div className='fixed'>
       <Toaster />
