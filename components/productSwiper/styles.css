@@ -34,8 +34,7 @@
     width: 200px;
 }
 .mainPhotoModal{
-  display: block;
   width: 70%;
   height: 35vh;
-  object-fit:fill;
+  object-fit:cover;
 }
