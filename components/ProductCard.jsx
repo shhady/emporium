@@ -6,6 +6,9 @@ import { Heart } from 'lucide-react';
 import { ShoppingBag } from 'lucide-react';
 import Modal from './modal/Modal';
 
+function generateCategoryLink(gender, category, productId) {
+  return `/${gender}/${category}/${productId}`;
+}
 export default function ProductCard({ product, gender }) {
   const [isFav, setIsFav] = useState(false);
 
@@ -20,7 +23,7 @@ export default function ProductCard({ product, gender }) {
     event.preventDefault();
   };
   return (
-    <Link legacyBehavior  href={gender ? `${product.category}/${product._id}` : `${product.gender}/${product.category}/${product._id}`} passHref className="w-full">
+    <Link legacyBehavior  href={generateCategoryLink(product.gender,product.category, product._id)} passHref className="w-full">
       <div className="bg-white md:shadow-md md:ounded-lg overflow-hidden relative mt-2 cursor-pointer" >
         <div className="relative">
           <div

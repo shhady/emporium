@@ -6,7 +6,8 @@ export default async function ProductDetails ({params}) {
   // const [product, setProduct] = useState(null);
   const {productId} = params;
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_PROD_URL ? process.env.NEXT_PUBLIC_BACKEND_PROD_URL : process.env.NEXT_PUBLIC_BACKEND_DEV_URL }/api/products/${params.productId}`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_PROD_URL ? process.env.NEXT_PUBLIC_BACKEND_PROD_URL : process.env.NEXT_PUBLIC_BACKEND_DEV_URL }/api/products/${params.productId}`,
+  { next: { revalidate: 3600 } });
   if (!response.ok) {
     return <div className='mt-8 flex justify-center items-center'>No products found</div>;;
   }

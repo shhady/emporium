@@ -12,7 +12,8 @@ export default async function NewArrivals() {
     // Fetch products data from your backend API
     const fetchProducts = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_PROD_URL ? process.env.NEXT_PUBLIC_BACKEND_PROD_URL : process.env.NEXT_PUBLIC_BACKEND_DEV_URL }api/products`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_PROD_URL ? process.env.NEXT_PUBLIC_BACKEND_PROD_URL : process.env.NEXT_PUBLIC_BACKEND_DEV_URL }api/products`, 
+        { next: { revalidate: 3600 } });
                 if (!response.ok) {
           throw new Error('Failed to fetch products');
         }

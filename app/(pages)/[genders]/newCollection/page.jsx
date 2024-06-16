@@ -6,7 +6,8 @@ export default async function NewCollection({ params }) {
   const { genders } = params;
 
   // Fetch products based on gender
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_PROD_URL ? process.env.NEXT_PUBLIC_BACKEND_PROD_URL : process.env.NEXT_PUBLIC_BACKEND_DEV_URL}/api/products/gender?gender=${genders}`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_PROD_URL ? process.env.NEXT_PUBLIC_BACKEND_PROD_URL : process.env.NEXT_PUBLIC_BACKEND_DEV_URL}/api/products/gender?gender=${genders}`,
+  { next: { revalidate: 3600 } });
   
   if (!response.ok) {
     throw new Error('Failed to fetch products');
