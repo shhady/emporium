@@ -1,5 +1,5 @@
 .modal-container {
-    height: 80vh; /* Ensure modal doesn't exceed viewport height */
+    height: 90vh; /* Ensure modal doesn't exceed viewport height */
     overflow: hidden; /* Hide overflow on the container */
   }
   

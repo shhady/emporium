@@ -36,6 +36,6 @@
 .swiper-slide .mainPhotoModal{
   display: block;
   width: 70%;
-  height: 35vh;
+  height: 30vh;
   object-fit:fill;
 }
