@@ -33,8 +33,9 @@
     height: 50vh;
     width: 200px;
 }
-.mainPhotoModal{
+.swiper-slide .mainPhotoModal{
+  display: block;
   width: 70%;
   height: 35vh;
-  object-fit:cover;
+  object-fit:fill;
 }
