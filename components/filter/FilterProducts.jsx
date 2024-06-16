@@ -108,7 +108,7 @@ function FilterProducts({ products }) {
   return (
     <div className="flex flex-col md:flex-row gap-4">
       {/* Filter button for small screens */}
-      <div className='flex justify-around items-center'>
+      <div className='flex justify-around items-center border-solid border-2 mt-2'>
       <Button 
         onPress={onOpen} 
         className="bg-white md:hidden block "
@@ -121,7 +121,7 @@ function FilterProducts({ products }) {
       </Button>
       <div className="flex flex-col gap-1 my-4 md:hidden">
           {/* <h4 className="font-semibold">הצג לפי:</h4> */}
-          <select onChange={handleSortChange} value={sortCriteria}>
+          <select onChange={handleSortChange} value={sortCriteria} >
             <option value="latestAdded">התווסף לאחרונה</option>
             <option value="priceLowHigh">מחיר: נמוך לגבוה</option>
             <option value="priceHighLow">מחיר: גבוה לנמוך</option>
