@@ -3,7 +3,7 @@ import React from "react";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
 import { ShoppingBag } from 'lucide-react';
 import ProductInfo from "../productDetails/ProductInfo";
-
+import "./style.css"
 export default function MyModal({product}) {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [modalPlacement, setModalPlacement] = React.useState("auto");
@@ -24,14 +24,15 @@ export default function MyModal({product}) {
         placement={modalPlacement}
         onOpenChange={onOpenChange} 
         size='3xl'
+        className="modal-container "
       >
         <ModalContent>
           {(onClose) => (
             <>
             
               <ModalHeader className="flex flex-col gap-1"></ModalHeader>
-              <ModalBody>
-                <div className="py-4">
+              <ModalBody className=" px-6 py-4">
+                <div>
 
                 <ProductInfo product={product} onPress={onClose}/>
                 </div>
