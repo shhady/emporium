@@ -1,7 +1,7 @@
 // app/[genders]/[category]/page.jsx
 
-import ProductCard from '@/components/ProductCard';
 import BreadCrumbs from './[productId]/BreadCrumbs';
+import FilterProducts from '@/components/filter/FilterProducts';
 // import { fetchProductsByCategoryAndGender } from '@/lib/api'; // Assuming you have a utility function for API calls
 
 export default async function ProductsByCategoryAndGender({ params }) {
@@ -18,11 +18,7 @@ export default async function ProductsByCategoryAndGender({ params }) {
   return (
     <div className='mt-4 lg:px-16'>
       <BreadCrumbs route={{ genders, category }} />
-      <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 md:gap-2 md:p-6'>
-        {data?.map((product) => (
-          <ProductCard key={product._id} product={product} gender={genders} />
-        ))}
-      </div>
+      <FilterProducts products={data} />
     </div>
   );
 }

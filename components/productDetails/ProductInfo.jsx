@@ -62,7 +62,7 @@ export default function ProductInfo({ product , productId,onPress}) {
        <div className='md:hidden'>
           <SwiperMobile images={chosenVariant.images} productId={productId}/>
     </div>
-    <div className={`${productId ? 'h-1/2-screen':""} col-span-5 px-4 md:px-24 flex flex-col justify-between`}>
+    <div className={`${productId ? 'h-1/2-screen':""} col-span-5 px-4 ${!productId ? 'md:px-4': "md:px-24"} flex flex-col justify-between`}>
       <div dir='ltr' className='flex justify-between items-center mt-2'>
         <h1 className='font-medium text-2xl'>{product.brand}</h1>
         <Heart size={16} color="#000000" strokeWidth={1.25} onClick={handleFavClick} className={`cursor-pointer ${isFav ? 'text-red-500' : ''}`} />
@@ -101,7 +101,7 @@ export default function ProductInfo({ product , productId,onPress}) {
 ) : (
   <div style={{ height: '48px', margin: 0, padding: 0 }}></div>
 )}    </div>
-      <div className='w-full flex justify-center items-center mt-2'>
+      <div className='w-full flex justify-center items-center mt-2 gap-1'>
         <Button  className='w-3/4' onClick={handleAddToCart}>הוסף לסל</Button>
        {!productId &&  <Button onClick={onPress}  className='w-1/4 bg-white text-red-500' >ביטול</Button>}
       </div>

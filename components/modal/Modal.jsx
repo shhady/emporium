@@ -23,7 +23,7 @@ export default function MyModal({product}) {
         isOpen={isOpen} 
         placement={modalPlacement}
         onOpenChange={onOpenChange} 
-        size='3xl'
+        size='5xl'
         className="modal-container "
       >
         <ModalContent>
@@ -38,15 +38,6 @@ export default function MyModal({product}) {
                 </div>
                 
               </ModalBody>
-              
-              {/* <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  ביטול
-                </Button>
-                <Button color="primary" onPress={onClose}>
-                 הוסף לסל
-                </Button>
-              </ModalFooter> */}
             </>
           )}
         </ModalContent>
