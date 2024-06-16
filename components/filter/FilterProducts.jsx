@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import ProductCard from '@/components/ProductCard';
-import {ChevronDown} from 'lucide-react'
+import { ChevronDown } from 'lucide-react';
+import './style.css'
 function FilterProducts({ products }) {
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [selectedColors, setSelectedColors] = useState([]);
@@ -13,7 +14,6 @@ function FilterProducts({ products }) {
   const [sortCriteria, setSortCriteria] = useState('');
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   
-  // Extract unique colors, sizes, and brands from the product data
   const allColors = [...new Set(products.flatMap(product => product.variants.map(variant => variant.color)))];
   const allSizes = [...new Set(products.flatMap(product => product.variants.flatMap(variant => variant.stock.map(stock => stock.size))))];
   const allBrands = [...new Set(products.map(product => product.brand))];
@@ -25,14 +25,12 @@ function FilterProducts({ products }) {
   const applyFilters = () => {
     let filtered = products;
 
-    // Filter by selected colors
     if (selectedColors.length > 0) {
       filtered = filtered.filter(product => 
         product.variants.some(variant => selectedColors.includes(variant.color))
       );
     }
 
-    // Filter by selected sizes
     if (selectedSizes.length > 0) {
       filtered = filtered.filter(product => 
         product.variants.some(variant => 
@@ -41,7 +39,6 @@ function FilterProducts({ products }) {
       );
     }
 
-    // Filter by price range
     if (selectedPriceRange) {
       filtered = filtered.filter(product => {
         if (selectedPriceRange === 'under200') return product.price < 200;
@@ -55,12 +52,10 @@ function FilterProducts({ products }) {
       );
     }
 
-    // Filter by selected brands
     if (selectedBrands.length > 0) {
       filtered = filtered.filter(product => selectedBrands.includes(product.brand));
     }
 
-    // Sort products based on sort criteria
     if (sortCriteria) {
       if (sortCriteria === 'priceLowHigh') {
         filtered.sort((a, b) => a.price - b.price);
@@ -92,7 +87,7 @@ function FilterProducts({ products }) {
 
   const handleSliderChange = (e) => {
     setPriceRange({ ...priceRange, max: parseFloat(e.target.value) });
-    setSelectedPriceRange(''); // Deselect the radio buttons when the range slider is used
+    setSelectedPriceRange('');
   };
 
   const handleBrandChange = (brand) => {
@@ -109,19 +104,20 @@ function FilterProducts({ products }) {
     <div className="flex flex-col md:flex-row gap-4">
       {/* Filter button for small screens */}
       <div className='flex justify-around items-center border-solid border-2 mt-2'>
-      <Button 
-        onPress={onOpen} 
-        className="bg-white md:hidden block "
-      >
-        <div className='flex justify-center items-center gap-2 text-[16px]'> 
-        סינונן לפי 
-        <ChevronDown size={16} /> 
-        
+        <Button 
+          onPress={onOpen} 
+          className="bg-white md:hidden block"
+        >
+          <div className='flex justify-center items-center gap-2 text-[16px]'> 
+            סינון לפי 
+            <ChevronDown size={16} /> 
+          </div>
+        </Button>
+        <div className="flex justify-center items-center">
+          <div className="h-full w-[1px] bg-gray-300 mx-2" />
         </div>
-      </Button>
-      <div className="flex flex-col gap-1 my-4 md:hidden">
-          {/* <h4 className="font-semibold">הצג לפי:</h4> */}
-          <select onChange={handleSortChange} value={sortCriteria} >
+        <div className="flex flex-col gap-1 my-4 md:hidden">
+          <select onChange={handleSortChange} value={sortCriteria}>
             <option value="latestAdded">התווסף לאחרונה</option>
             <option value="priceLowHigh">מחיר: נמוך לגבוה</option>
             <option value="priceHighLow">מחיר: גבוה לנמוך</option>
@@ -140,13 +136,14 @@ function FilterProducts({ products }) {
         onOpenChange={onOpenChange} 
         size="3xl"
         closeButton
+        className="modal-container"
       >
         <ModalContent>
           <>
             <ModalHeader className="flex flex-col gap-1">
               <h4>סינון לפי</h4>
             </ModalHeader>
-            <ModalBody className="px-6 py-4">
+            <ModalBody className="modal-body px-6 py-4">
               {renderFilters()}
             </ModalBody>
             <ModalFooter className="flex justify-end">
@@ -173,10 +170,10 @@ function FilterProducts({ products }) {
   function renderFilters() {
     return (
       <>
-        <div className="hidden gap-1 mb-6  md:flex md:flex-col">
+        <div className="hidden gap-1 mb-6 md:flex md:flex-col">
           <h4 className="font-semibold">הצג לפי:</h4>
           <select onChange={handleSortChange} value={sortCriteria}>
-          <option value="latestAdded">התווסף לאחרונה</option>
+            <option value="latestAdded">התווסף לאחרונה</option>
             <option value="priceLowHigh">מחיר: נמוך לגבוה</option>
             <option value="priceHighLow">מחיר: גבוה לנמוך</option>
           </select>
