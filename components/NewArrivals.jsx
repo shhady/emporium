@@ -2,7 +2,7 @@
 // import Image from 'next/image'
 // import React, {useState, useEffect} from 'react'
 // import { Button } from './ui/button'
-import ProductCard from './ProductCard';
+import ProductCard from './productCard/ProductCard';
 
 export default async function NewArrivals() {
   // const [products, setProducts] = useState([]);

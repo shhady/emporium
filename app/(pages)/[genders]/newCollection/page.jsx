@@ -1,4 +1,4 @@
-import ProductCard from '@/components/ProductCard';
+import ProductCard from '@/components/productCard/ProductCard';
 import BreadCrumbs from '../[category]/[productId]/BreadCrumbs';
 import FilterProducts from '@/components/filter/FilterProducts';
 

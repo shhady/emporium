@@ -105,7 +105,7 @@ function FilterProducts({ products }) {
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-4">
+    <div className="flex flex-col md:flex-row gap-4 md:px-6">
       {/* Filter button for small screens */}
       <div className='flex justify-around items-center border-solid border-2 mt-2 md:hidden'>
       <FilterButton onOpen={onOpen} />
