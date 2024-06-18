@@ -15,7 +15,7 @@ export default function MyModal({product}) {
   return (
     <div className="flex flex-col gap-2" onClick={handleFavClick}>
 <Button isIconOnly onPress={onOpen} className="flex flex-col justify-center items-center bg-transparent">
-    <div className='rounded-full border border-black p-2'>
+    <div className='rounded-full border border-black p-2' onClick={handleFavClick}>
   <ShoppingBag size={16}/>
     </div>
 </Button>      
