@@ -81,7 +81,7 @@ export async function POST(req) {
         console.log(`User with email ${user.email} already exists.`);
         return existingUser; // Return the existing user instead of creating a new one.
       }
-      
+
       const newUser = await createUser(user);
       if (newUser) {
         await clerkClient.users.updateUserMetadata(id, {
@@ -90,6 +90,7 @@ export async function POST(req) {
           }
         });
         console.log('User created and metadata updated:', newUser);
+        window.localStorage.setItem(newUser)
       }
     } catch (error) {
       console.error('Error creating user or updating metadata:', error);
