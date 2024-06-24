@@ -83,6 +83,7 @@ export async function POST(req) {
                 userId:newUser._id,
             }
         })
+        window.localStorage.setItem(newUser)
     }
     return NextResponse.json({message: 'new user created successfully', user: newUser})
   } else {
