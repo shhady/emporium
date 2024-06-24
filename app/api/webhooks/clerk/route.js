@@ -76,6 +76,12 @@ export async function POST(req) {
 
     console.log('Creating user:', user);
     try {
+      const existingUser = await User.findOne({ email: user.email });
+      if (existingUser) {
+        console.log(`User with email ${user.email} already exists.`);
+        return existingUser; // Return the existing user instead of creating a new one.
+      }
+      
       const newUser = await createUser(user);
       if (newUser) {
         await clerkClient.users.updateUserMetadata(id, {
