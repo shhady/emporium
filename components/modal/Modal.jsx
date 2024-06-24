@@ -8,14 +8,14 @@ export default function MyModal({product}) {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [modalPlacement, setModalPlacement] = React.useState("auto");
 
-  const handleFavClick = (event) => {
+  const handleBagClick = (event) => {
     event.stopPropagation();
     event.preventDefault();
   };
   return (
-    <div className="flex flex-col gap-2" onClick={handleFavClick}>
+    <div className="flex flex-col gap-2" onClick={handleBagClick}>
 <Button isIconOnly onPress={onOpen} className="flex flex-col justify-center items-center bg-transparent">
-    <div className='rounded-full border border-black p-2' onClick={handleFavClick}>
+    <div className='rounded-full border border-black p-2' onClick={handleBagClick}>
   <ShoppingBag size={16}/>
     </div>
 </Button>      

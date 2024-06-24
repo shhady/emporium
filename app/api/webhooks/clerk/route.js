@@ -85,6 +85,8 @@ export async function POST(req) {
         })
     }
     return NextResponse.json({message: 'new user created successfully', user: newUser})
+  } else {
+    console.log(type);
   }
 
   return new Response('', { status: 200 });
