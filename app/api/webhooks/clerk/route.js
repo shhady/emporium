@@ -75,19 +75,23 @@ export async function POST(req) {
     };
 
     console.log('Creating user:', user);
-
-    const newUser = await createUser(user);
-    if(newUser){
-        await clerkClient.users.updateUserMetadata(id,{
-            publicMetadata:{
-                userId:newUser._id,
-            }
-        })
-        window.localStorage.setItem(newUser)
+    try {
+      const newUser = await createUser(user);
+      if (newUser) {
+        await clerkClient.users.updateUserMetadata(id, {
+          publicMetadata: {
+            userId: newUser._id,
+          }
+        });
+        console.log('User created and metadata updated:', newUser);
+      }
+    } catch (error) {
+      console.error('Error creating user or updating metadata:', error);
+      return new Response('Error occurred', { status: 500 });
     }
     return NextResponse.json({message: 'new user created successfully', user: newUser})
   } else {
-    console.log(type);
+    console.log('Unhandled webhook type:', type);
   }
 
   return new Response('', { status: 200 });
