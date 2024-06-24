@@ -47,7 +47,31 @@ export default function Example() {
   const {user} = useUser()
   const {userId} = useAuth()
   console.log(userId);
- 
+  useEffect(() => {
+    // Ensure userId is available before fetching
+    if (userId) {
+      console.log('there is a user with id');
+      // setLoading(true); // Set loading to true before starting fetch
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_PROD_URL ? process.env.NEXT_PUBLIC_BACKEND_PROD_URL : process.env.NEXT_PUBLIC_BACKEND_DEV_URL }/api/users/${userId}`) // API endpoint to fetch user data
+        .then(response => {
+          console.log('responseeeeeee', response);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json(); // Parse JSON response
+        })
+        .then(data => {
+          console.log(data);
+          // setUserData(data); // Set user data state
+          // setLoading(false); // Set loading to false after data is fetched
+        })
+        .catch(error => {
+          console.error('Error fetching user data:', error);
+          // setError(error.message); // Set error state
+          // setLoading(false); // Set loading to false even on error
+        });
+    }
+  }, [userId]);
   const pathname = usePathname()
   console.log(pathname.split('/')[1]);
  

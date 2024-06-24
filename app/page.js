@@ -12,8 +12,9 @@ export default function Home() {
       {/* <Navbar /> */}
      {/* <AutoplayCarousel /> */}
      <HeroSection />
-     <Categories />
+     {/* <Categories /> */}
      <GeneralInfo />
+     <Categories />
      <NewArrivals />
     <Footer />
     </main>
