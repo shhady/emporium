@@ -3,7 +3,7 @@ import { headers } from 'next/headers';
 import { WebhookEvent } from '@clerk/nextjs/server';
 import User from '@/models/user';
 import { connectToDB } from "@/utils/database";
-import { createUser } from '../../add-user/route';
+import { createUser } from '../../users/add-user/route';
 import { clerkClient } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
 export async function POST(req) {
