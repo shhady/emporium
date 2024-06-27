@@ -3,7 +3,7 @@ import { headers } from 'next/headers';
 import { WebhookEvent } from '@clerk/nextjs/server';
 import User from '@/models/user';
 import { connectToDB } from "@/utils/database";
-import { createUser } from '../../users/add-user/route';
+import { createUser } from '../../add-user/route';
 import { clerkClient } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
 export async function POST(req) {
@@ -61,6 +61,10 @@ export async function POST(req) {
   console.log(`Webhook with an ID of ${id} and type of ${type}`);
   console.log('Webhook body:', body);
 
+  if(type === 'user.updated'){
+    console.log('user logged in successfully')
+  }
+
   if (type === 'user.created') {
     const { id, email_addresses, image_url, first_name, last_name, username } = evt.data;
 
@@ -75,30 +79,16 @@ export async function POST(req) {
     };
 
     console.log('Creating user:', user);
-    try {
-      const existingUser = await User.findOne({ email: user.email });
-      if (existingUser) {
-        console.log(`User with email ${user.email} already exists.`);
-        return existingUser; // Return the existing user instead of creating a new one.
-      }
 
-      const newUser = await createUser(user);
-      if (newUser) {
-        await clerkClient.users.updateUserMetadata(id, {
-          publicMetadata: {
-            userId: newUser._id,
-          }
-        });
-        console.log('User created and metadata updated:', newUser);
-        window.localStorage.setItem(newUser)
-      }
-    } catch (error) {
-      console.error('Error creating user or updating metadata:', error);
-      return new Response('Error occurred', { status: 500 });
+    const newUser = await createUser(user);
+    if(newUser){
+        await clerkClient.users.updateUserMetadata(id,{
+            publicMetadata:{
+                userId:newUser._id,
+            }
+        })
     }
     return NextResponse.json({message: 'new user created successfully', user: newUser})
-  } else {
-    console.log('Unhandled webhook type:', type);
   }
 
   return new Response('', { status: 200 });

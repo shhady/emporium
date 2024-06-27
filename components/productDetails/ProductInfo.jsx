@@ -41,7 +41,8 @@ export default function ProductInfo({ product , productId,onPress}) {
     const cartItem = {
       product,
       variant: chosenVariant,
-      size: selectedSize
+      size: selectedSize,
+      color:chosenVariant.color
     };
     
     toast.success('מוצר זה התווסף לסל מוצרים', {
