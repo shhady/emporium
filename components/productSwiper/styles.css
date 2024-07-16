@@ -20,7 +20,7 @@
   max-width: 550px;
   height: 80%;
   max-height: 50vh;
-  object-fit:cover;
+  object-fit:contain;
 }
 
 /* .paginationPhotos{
@@ -39,5 +39,5 @@
   display: block;
   width: 70%;
   height: 30vh;
-  object-fit:fill;
+  object-fit:contain;
 }

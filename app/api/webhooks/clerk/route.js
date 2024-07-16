@@ -61,7 +61,7 @@ export async function POST(req) {
   console.log(`Webhook with an ID of ${id} and type of ${type}`);
   console.log('Webhook body:', body);
 
-  if(type === 'user.updated'){
+  if(type === 'session.created'){
     console.log('user logged in successfully')
   }
 

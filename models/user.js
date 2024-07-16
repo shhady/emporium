@@ -31,6 +31,18 @@ const userSchema = new Schema({
       type: String,
       default: 'user',
     },
+    city:{
+      type: String,
+    },
+    street:{
+      type: String,
+    },
+    houseNumber:{
+      type: String,
+    },
+    phoneNumber:{
+      type: Number
+    }
   }, { timestamps: true });
 
 const User = models.User || mongoose.model('User', userSchema);

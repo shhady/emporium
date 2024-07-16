@@ -4,13 +4,14 @@ import { Button } from '../ui/button';
 import { Heart } from 'lucide-react';
 import { Toaster, toast } from 'sonner';
 import {SwiperDesktop,SwiperMobile} from '@/components/productSwiper/Swiper';
-
+import { useAuth } from '@clerk/nextjs';
 export default function ProductInfo({ product , productId,onPress}) {
   // const [localChosenVariant, setLocalChosenVariant] = useState(chosenVariant);
   const [isFav, setIsFav] = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
   const [alertSize, setAlertSize] = useState(false);
   const [variants, setVariants] = useState(product.variants);
+  const {userId} = useAuth()
   const [chosenVariant, setChosenVariant] = useState(product.variants[0])
   const handleFavClick = (event) => {
     event.stopPropagation();
@@ -18,6 +19,7 @@ export default function ProductInfo({ product , productId,onPress}) {
     setIsFav(prev => !prev);
   };
 
+  console.log(chosenVariant);
 
   const chooseVariant = (id) => {
     const chosenNewVariant = variants.find(variant => variant._id === id);
@@ -28,36 +30,51 @@ export default function ProductInfo({ product , productId,onPress}) {
     setSelectedSize(size);
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     const loadingToast = toast.loading('מוסיף לסל');
 
-    if(!selectedSize){
+    if (!selectedSize) {
       setAlertSize(true);
-         return toast.error('תבחר מידה', {
-          id: loadingToast,
-        });
+      return toast.error('תבחר מידה', {
+        id: loadingToast,
+      });
     }
-    // Logic to save the product, variant, and selected size
-    const cartItem = {
-      product,
-      variant: chosenVariant,
-      size: selectedSize,
-      color:chosenVariant.color
-    };
-    
-    toast.success('מוצר זה התווסף לסל מוצרים', {
-      id: loadingToast,
-    });
-    setAlertSize(false)
-    console.log('Adding to cart:', cartItem);
-    setTimeout(function () {
-      if(!productId){
-        onPress()
-      }
-    },1000)
-    // Add the item to the cart or send it to the backend as needed
-  };
 
+    const cartItem = {
+      productId: product._id,
+      variantId: chosenVariant._id,
+      size: selectedSize,
+      color: chosenVariant.color,
+      image:chosenVariant.images[0]
+    };
+
+    try {
+      const response = await fetch(`/api/cart`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...cartItem, clerkId: userId }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add to cart');
+      }
+
+      const result = await response.json();
+      toast.success('מוצר זה התווסף לסל מוצרים', {
+        id: loadingToast,
+      });
+
+      setAlertSize(false);
+      console.log('Added to cart:', result);
+    } catch (error) {
+      toast.error('Error adding to cart', {
+        id: loadingToast,
+      });
+      console.error('Error:', error);
+    }
+  };
   return (
     <div className='grid grid-cols-1 md:grid md:grid-cols-10'>
        <div className='md:hidden'>
